@@ -1,3 +1,15 @@
+/*
+ * Name: Nguyen Hieu Kien
+ * Date: 01/19/2026
+ * Description: Activity 2 Challenge. This code toggles an LED on every  other press of BUTTON_PIN
+ * Hardware: LED on GPIO 10, Button 1 on GPIO 11
+ */
+
+
+
+#include "freertos/FreeRTOS.h"
+#include "driver/gpio.h"
+
 #include "freertos/FreeRTOS.h"
 #include "driver/gpio.h"
 
