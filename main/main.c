@@ -35,18 +35,16 @@ void app_main(void) {
     int last_button_state = 1;
 
     while (1) {
-        
+        //read button state 
         int current_button_state = gpio_get_level(BUTTON_PIN);
         int enable_button_state = gpio_get_level(BUTTON_PIN2);
 
         
         if (last_button_state == 1 && current_button_state == 0) {
-            
+                        	// Debounce
             vTaskDelay(50 / portTICK_PERIOD_MS);
-            
-            
             if (gpio_get_level(BUTTON_PIN) == 0 && enable_button_state == 0) {
-                
+                // Toggle state
                 led_state = !led_state;
                 gpio_set_level(LED_PIN, led_state);
             }
