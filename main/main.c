@@ -13,20 +13,19 @@
 
 #define LED_PIN GPIO_NUM_10
 #define BUTTON_PIN GPIO_NUM_11
-#define BUTTON_PIN2 GPIO_NUM_12 // New second button (Enable)
+#define BUTTON_PIN2 GPIO_NUM_12 
 
 void app_main(void) {
-    // Configure LED output
+    
     gpio_reset_pin(LED_PIN);
     gpio_set_direction(LED_PIN, GPIO_MODE_OUTPUT);
 
-    // Configure first button input (Pull-up)
+    
     gpio_reset_pin(BUTTON_PIN);
     gpio_set_direction(BUTTON_PIN, GPIO_MODE_INPUT);
     gpio_pullup_en(BUTTON_PIN);
     gpio_pulldown_dis(BUTTON_PIN);
 
-    // Configure second button input (Enable button, same mode as BUTTON_PIN)
     gpio_reset_pin(BUTTON_PIN2);
     gpio_set_direction(BUTTON_PIN2, GPIO_MODE_INPUT);
     gpio_pullup_en(BUTTON_PIN2);
@@ -36,24 +35,24 @@ void app_main(void) {
     int last_button_state = 1;
 
     while (1) {
-        // Read current state of both buttons
+        
         int current_button_state = gpio_get_level(BUTTON_PIN);
         int enable_button_state = gpio_get_level(BUTTON_PIN2);
 
-        // Detect falling edge (press) on BUTTON_PIN
+        
         if (last_button_state == 1 && current_button_state == 0) {
-            // Debounce delay
+            
             vTaskDelay(50 / portTICK_PERIOD_MS);
             
-            // Check if BUTTON_PIN is still pressed AND BUTTON_PIN2 is also pressed (LOW)
+            
             if (gpio_get_level(BUTTON_PIN) == 0 && enable_button_state == 0) {
-                // Toggle state (turns on/off every other time button is validly pressed)
+                
                 led_state = !led_state;
                 gpio_set_level(LED_PIN, led_state);
             }
         }
         
         last_button_state = current_button_state;
-        vTaskDelay(10 / portTICK_PERIOD_MS); // Small delay for CPU stability
+        vTaskDelay(10 / portTICK_PERIOD_MS); 
     }
 }
